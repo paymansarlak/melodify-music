@@ -1,4 +1,4 @@
-/* ================================================================
+ُ/* ================================================================
    MELODIFY — APPLICATION LOGIC
    Vanilla JS only. Organized as a single app object to avoid
    polluting the global namespace with loose variables.
@@ -9,17 +9,17 @@
    Replace `src` / `cover` with your own files inside
    assets/music/ and assets/images/. Keep the same field names.
    ============================================================ */
-const songs = [
-  { id: 1, title: "بارون بهاری",     artist: "آرمان کیا",     album: "فصل‌ها",     genre: "پاپ",     duration: 10, src: "assets/music/baroon-bahari.mp3",   cover: "assets/images/baroon-bahari.jpg" },
-  { id: 2, title: "شب آرام",         artist: "نگار رستمی",    album: "سکوت",       genre: "آرام",    duration: 10, src: "assets/music/shabe-aram.mp3",       cover: "assets/images/shabe-aram.jpg" },
-  { id: 3, title: "رویای دور",       artist: "سینا مهر",      album: "افق",        genre: "امبینت",  duration: 10, src: "assets/music/roya-ye-dour.mp3",     cover: "assets/images/roya-ye-dour.jpg" },
-  { id: 4, title: "لحظه‌های ساده",   artist: "پرنیا",         album: "روزمرگی",    genre: "آکوستیک", duration: 7, src: "assets/music/lahzehaye-sadeh.mp3",  cover: "assets/images/lahzehaye-sadeh.jpg" },
-  { id: 5, title: "آسمون آبی",       artist: "کیوان طاها",    album: "پرواز",      genre: "پاپ",     duration: 5, src: "assets/music/aseman-abi.mp3",       cover: "assets/images/aseman-abi.jpg" },
-  { id: 6, title: "خاطره‌ها",        artist: "نگار رستمی",    album: "سکوت",       genre: "آرام",    duration: 14, src: "assets/music/khaterehha.mp3",       cover: "assets/images/khaterehha.jpg" },
-  { id: 7, title: "جاده‌ی نور",      artist: "آرمان کیا",     album: "فصل‌ها",     genre: "پاپ",     duration: 6, src: "assets/music/jade-ye-nour.mp3",     cover: "assets/images/jade-ye-nour.jpg" },
-  { id: 8, title: "نسیم شرقی",       artist: "سینا مهر",      album: "افق",        genre: "امبینت",  duration: 7, src: "assets/music/nasime-sharghi.mp3",   cover: "assets/images/nasime-sharghi.jpg" },
-  { id: 9, title: "ستاره‌ی من",      artist: "پرنیا",         album: "روزمرگی",    genre: "آکوستیک", duration: 9, src: "assets/music/setareh-ye-man.mp3",   cover: "assets/images/setareh-ye-man.jpg" },
-  { id:10, title: "پاییز عاشق",      artist: "کیوان طاها",    album: "پرواز",      genre: "پاپ",     duration: 11, src: "assets/music/paeez-ashegh.mp3",     cover: "assets/images/paeez-ashegh.jpg" }
+const songs = const songs = [
+  { id: 1, title: "بارون بهاری", artist: "آرمان کیا", album: "فصل‌ها", genre: "پاپ", duration: 10, src: "baroon-bahari.mp3", cover: "baroon-bahari.jpg" },
+  { id: 2, title: "شب آرام", artist: "نگار رستمی", album: "سکوت", genre: "آرام", duration: 10, src: "shabe-aram.mp3", cover: "shabe-aram.jpg" },
+  { id: 3, title: "رویای دور", artist: "سینا مهر", album: "افق", genre: "امبینت", duration: 10, src: "roya-ye-dour.mp3", cover: "roya-ye-dour.jpg" },
+  { id: 4, title: "لحظه‌های ساده", artist: "پرنیا", album: "روزمرگی", genre: "آکوستیک", duration: 7, src: "lahzehaye-sadeh.mp3", cover: "lahzehaye-sadeh.jpg" },
+  { id: 5, title: "آسمون آبی", artist: "کیوان طاها", album: "پرواز", genre: "پاپ", duration: 5, src: "aseman-abi.mp3", cover: "aseman-abi.jpg" },
+  { id: 6, title: "خاطره‌ها", artist: "نگار رستمی", album: "سکوت", genre: "آرام", duration: 14, src: "khaterehha.mp3", cover: "khaterehha.jpg" },
+  { id: 7, title: "جاده‌ی نور", artist: "آرمان کیا", album: "فصل‌ها", genre: "پاپ", duration: 6, src: "jade-ye-nour.mp3", cover: "jade-ye-nour.jpg" },
+  { id: 8, title: "نسیم شرقی", artist: "سینا مهر", album: "افق", genre: "امبینت", duration: 7, src: "nasime-sharghi.mp3", cover: "nasime-sharghi.jpg" },
+  { id: 9, title: "ستاره‌ی من", artist: "پرنیا", album: "روزمرگی", genre: "آکوستیک", duration: 9, src: "setareh-ye-man.mp3", cover: "setareh-ye-man.jpg" },
+  { id: 10, title: "پاییز عاشق", artist: "کیوان طاها", album: "پرواز", genre: "پاپ", duration: 11, src: "paeez-ashegh.mp3", cover: "paeez-ashegh.jpg" }
 ];
 
 const DEFAULT_COVER =
