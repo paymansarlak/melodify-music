@@ -9,7 +9,7 @@
    Replace `src` / `cover` with your own files inside
    assets/music/ and assets/images/. Keep the same field names.
    ============================================================ */
-const songs = [
+const songs =const songs = [
   { id: 1, title: "بارون بهاری", artist: "آرمان کیا", album: "فصل‌ها", genre: "پاپ", duration: 10, src: "baroon-bahari.mp3", cover: "baroon-bahari.jpg" },
   { id: 2, title: "شب آرام", artist: "نگار رستمی", album: "سکوت", genre: "آرام", duration: 10, src: "shabe-aram.mp3", cover: "shabe-aram.jpg" },
   { id: 3, title: "رویای دور", artist: "سینا مهر", album: "افق", genre: "امبینت", duration: 10, src: "roya-ye-dour.mp3", cover: "roya-ye-dour.jpg" },
