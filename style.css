@@ -318,18 +318,17 @@ input[type="range"]::-moz-range-track{ background: var(--line); height:5px; bord
   .app-shell{ display:block; }
   .sidebar{
     display:flex; flex-direction:column;
-    position: fixed; inset-block:0; inset-inline-start:0;
+    position: fixed; top:0; bottom:0; right:0; left:auto;
     width: min(80vw, 300px);
     max-width: 300px;
     height:100vh;
     background: var(--bg-panel);
     z-index: 90;
-    transform: translateX(-110%);
+    transform: translateX(110%);
     transition: transform 0.3s ease;
     box-shadow: var(--shadow);
     overflow-y: auto;
   }
-  [dir="rtl"] .sidebar{ inset-inline-start:auto; inset-inline-end:0; transform: translateX(110%); }
   .sidebar.open{ transform: translateX(0); }
 
   .sidebar-head{
