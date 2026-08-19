@@ -47,6 +47,7 @@
 *{ box-sizing: border-box; }
 html{ scroll-behavior: smooth; }
 
+html, body{ overflow-x: hidden; max-width: 100vw; }
 body{
   margin:0;
   font-family: var(--font-body);
@@ -83,8 +84,8 @@ svg{ width:100%; height:100%; fill:currentColor; }
 .topbar{
   position: sticky; top:0; z-index: 50;
   height: var(--header-h);
-  display:flex; align-items:center; gap: 14px;
-  padding: 0 20px;
+  display:flex; align-items:center; gap: clamp(8px, 2vw, 14px);
+  padding: 0 clamp(12px, 4vw, 20px);
   background: color-mix(in srgb, var(--bg-panel) 92%, transparent);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line);
@@ -102,7 +103,7 @@ svg{ width:100%; height:100%; fill:currentColor; }
 
 .search-wrap{
   position:relative;
-  flex:1; max-width: 420px;
+  flex:1; min-width:0; max-width: 420px;
   display:flex; align-items:center;
 }
 .search-icon{ position:absolute; inset-inline-start:12px; width:16px; height:16px; color: var(--text-faint); pointer-events:none; }
@@ -141,6 +142,7 @@ svg{ width:100%; height:100%; fill:currentColor; }
   align-self: flex-start;
   height: calc(100vh - var(--header-h));
 }
+.sidebar-head{ display:none; }
 .nav-list{ display:flex; flex-direction:column; gap:4px; }
 .nav-link{
   display:flex; align-items:center; gap:12px;
@@ -161,7 +163,7 @@ svg{ width:100%; height:100%; fill:currentColor; }
 .content{
   flex:1;
   min-width:0;
-  padding: 28px 28px 40px;
+  padding: clamp(16px, 3vw, 28px) clamp(14px, 3vw, 28px) 40px;
 }
 
 /* ================= VIEWS / SECTIONS ================= */
@@ -172,11 +174,11 @@ svg{ width:100%; height:100%; fill:currentColor; }
   background: linear-gradient(135deg, color-mix(in srgb, var(--brass) 18%, transparent), transparent 60%), var(--bg-panel);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  padding: 36px 30px;
+  padding: clamp(20px, 5vw, 36px) clamp(16px, 4vw, 30px);
   margin-bottom: 32px;
 }
-.hero h1{ margin:0 0 8px; font-size: 26px; font-weight:700; }
-.hero p{ margin:0; color: var(--text-muted); font-size:14.5px; }
+.hero h1{ margin:0 0 8px; font-size: clamp(19px, 4.2vw, 26px); font-weight:700; }
+.hero p{ margin:0; color: var(--text-muted); font-size: clamp(13px, 3vw, 14.5px); }
 
 .section-block{ margin-bottom: 34px; }
 .section-head{
@@ -202,7 +204,7 @@ svg{ width:100%; height:100%; fill:currentColor; }
   width:20px; text-align:center;
   font-family: var(--font-mono); font-size:12px; color: var(--text-faint); flex-shrink:0;
 }
-.track-row-cover{ width:44px; height:44px; border-radius:8px; object-fit:cover; background: var(--bg-raised); flex-shrink:0; }
+.track-row-cover{ width:44px; height:44px; aspect-ratio:1/1; border-radius:8px; object-fit:cover; background: var(--bg-raised); flex-shrink:0; }
 .track-row-info{ min-width:0; flex:1; display:flex; flex-direction:column; gap:2px; }
 .track-row-title{ font-size:14px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .track-row-artist{ font-size:12.5px; color: var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -249,7 +251,7 @@ svg{ width:100%; height:100%; fill:currentColor; }
   display:flex; align-items:center; gap:12px;
   width: 260px; flex-shrink:0; min-width:0;
 }
-.player-cover{ width:52px; height:52px; border-radius:8px; object-fit:cover; background: var(--bg-raised); flex-shrink:0; }
+.player-cover{ width:52px; height:52px; aspect-ratio:1/1; border-radius:8px; object-fit:cover; background: var(--bg-raised); flex-shrink:0; }
 .player-meta{ min-width:0; }
 .player-title{ margin:0; font-size:13.5px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .player-artist{ margin:0; font-size:12px; color: var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -299,54 +301,83 @@ input[type="range"]::-moz-range-track{ background: var(--line); height:5px; bord
 }
 
 /* ================= RESPONSIVE ================= */
+/* Tablet: hide the volume slider to make room, layout otherwise unchanged */
 @media (max-width: 980px){
   .player-volume{ display:none; }
 }
 
-@media (max-width: 760px){
+/* Mobile: sidebar becomes an off-canvas drawer, player bar wraps to two rows */
+@media (max-width: 768px){
   .menu-btn{ display:flex; }
   .brand-name{ display:none; }
   .search-wrap{ max-width: none; }
 
+  /* Sidebar becomes a fixed drawer instead of a permanent column.
+     Source order (this rule after the desktop .sidebar rule, same
+     0-1-0 specificity) is what makes it win — no !important needed. */
+  .app-shell{ display:block; }
   .sidebar{
-    position: fixed; top:0; bottom:0; inset-inline-start:0;
+    display:flex; flex-direction:column;
+    position: fixed; inset-block:0; inset-inline-start:0;
+    width: min(80vw, 300px);
+    max-width: 300px;
     height:100vh;
     background: var(--bg-panel);
     z-index: 90;
-    transform: translateX(110%);
+    transform: translateX(-110%);
     transition: transform 0.3s ease;
     box-shadow: var(--shadow);
+    overflow-y: auto;
   }
-  [dir="rtl"] .sidebar{ transform: translateX(-110%); }
+  [dir="rtl"] .sidebar{ inset-inline-start:auto; inset-inline-end:0; transform: translateX(110%); }
   .sidebar.open{ transform: translateX(0); }
+
+  .sidebar-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 4px 8px 14px; margin-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+  }
+  .sidebar-head-title{ font-weight:700; font-size:15px; }
+
+  .content{ width:100%; padding: 18px 16px 30px; }
+
   .sidebar-overlay{
     display:none;
     position: fixed; inset:0; background: rgba(0,0,0,0.5); z-index: 80;
   }
   .sidebar-overlay.show{ display:block; }
 
-  .content{ padding: 18px 14px 30px; }
-  .hero{ padding: 24px 18px; }
-  .hero h1{ font-size:21px; }
-
+  /* Player bar: track info + controls stack into two rows, fully within viewport */
   .player-bar{
     height: auto;
     padding: 10px 12px 12px;
     flex-wrap: wrap;
-    row-gap: 6px;
+    row-gap: 8px;
   }
-  .player-track-info{ width: auto; flex: 1 1 55%; }
-  .player-center{ order:3; flex-basis:100%; max-width:none; }
+  .player-track-info{ width:auto; min-width:0; flex: 1 1 100%; }
+  .player-center{ order:3; flex-basis:100%; max-width:none; min-width:0; }
   .fav-btn{ display:flex; }
-  body{ padding-bottom: 128px; }
   .track-row-duration{ display:none; }
+
+  /* Player bar is now taller (two rows) — keep it from covering content */
+  body{ padding-bottom: 170px; }
+
+  /* Comfortable touch targets on mobile (~44px) */
+  .icon-btn{ width:42px; height:42px; }
+  .btn-play{ width:46px; height:46px; }
+  .transport-row{ gap:12px; }
 }
 
-@media (max-width: 420px){
-  .player-track-info{ flex-basis: 100%; }
+/* Small phones: tighten spacing further, no layout changes needed beyond this */
+@media (max-width: 480px){
+  .player-meta{ max-width: 100%; }
+  .player-track-info{ gap:10px; }
+  .track-row{ gap:10px; padding: 8px; }
+  .track-row-cover{ width:40px; height:40px; }
 }
 
 @media (prefers-reduced-motion: reduce){
   .view{ animation:none; }
   .track-row-eq rect{ animation:none; }
+  .sidebar{ transition:none; }
 }
