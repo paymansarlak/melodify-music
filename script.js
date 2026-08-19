@@ -75,6 +75,7 @@ const themeBtn   = document.getElementById('theme-btn');
 const menuBtn    = document.getElementById('menu-btn');
 const sidebar    = document.getElementById('sidebar');
 const sidebarOverlay = document.getElementById('sidebar-overlay');
+const sidebarCloseBtn = document.getElementById('sidebar-close');
 
 const playBtn    = document.getElementById('play-btn');
 const playIcon   = document.getElementById('play-icon');
@@ -287,6 +288,10 @@ menuBtn.addEventListener('click', () => {
   sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
 });
 sidebarOverlay.addEventListener('click', closeSidebar);
+sidebarCloseBtn.addEventListener('click', closeSidebar);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && sidebar.classList.contains('open')) closeSidebar();
+});
 
 /* ============================================================
    8. SEARCH
